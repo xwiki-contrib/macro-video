@@ -1,4 +1,1 @@
-macro-video
-===========
-
-Displays videos from YouTube, Dailymotion and Vimeo
+See http://extensions.xwiki.org/xwiki/bin/view/Extension/Video+Macro
