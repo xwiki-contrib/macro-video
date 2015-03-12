@@ -44,30 +44,30 @@
 {{code}}
 Youtube:
 
-{{video url="http://www.youtube.com/watch?v=Titn-yAh74A" width="660" height="440"/}}
+{{video url="http://www.youtube.com/watch?v=Titn-yAh74A"/}}
 
 Dailymotion:
 
-{{video url="http://www.dailymotion.com/video/x9x04h_wiki-et-reseau-social-xwiki-et-blue_tech" width="660" height="440"/}}
+{{video url="http://www.dailymotion.com/video/x9x04h_wiki-et-reseau-social-xwiki-et-blue_tech"/}}
 
 Vimeo:
 
-{{video url="http://vimeo.com/30980990" width="660" height="440"/}}
+{{video url="http://vimeo.com/30980990"/}}
 {{/code}}
 
 Gives:
 
 Youtube:
 
-{{video url="http://www.youtube.com/watch?v=Titn-yAh74A" width="660" height="440"/}}
+{{video url="http://www.youtube.com/watch?v=Titn-yAh74A"/}}
 
 Dailymotion:
 
-{{video url="http://www.dailymotion.com/video/x9x04h_wiki-et-reseau-social-xwiki-et-blue_tech" width="660" height="440"/}}
+{{video url="http://www.dailymotion.com/video/x9x04h_wiki-et-reseau-social-xwiki-et-blue_tech"/}}
 
 Vimeo:
 
-{{video url="http://vimeo.com/30980990" width="660" height="440"/}}
+{{video url="http://vimeo.com/30980990"/}}
 </content>
   <object>
     <name>Macros.Video20</name>
@@ -116,7 +116,7 @@ Vimeo:
         <separators>|</separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
-        <values>Mandatory|Optional|No content</values>
+        <values>Optional|Mandatory|No content</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </contentType>
       <defaultCategory>
@@ -223,19 +223,8 @@ Compute the URL of the embedded video from the original web URL.
 
 Compute the width and height.
 
-#set ($width = 600)
-#set ($height = 400)
-#if ($xcontext.macro.params.width)
-  #set ($width = $mathtool.toInteger($xcontext.macro.params.width))
-  #if ($xcontext.macro.params.height)
-    #set ($height = $mathtool.toInteger($xcontext.macro.params.height))
-  #else
-    #set($height = $mathtool.floor($mathtool.div($width, 1.5)))
-  #end
-#elseif ($xcontext.macro.params.height)
-  #set ($height = $mathtool.toInteger($xcontext.macro.params.height))
-  #set ($width = $mathtool.floor($mathtool.mul($height, 1.5)))
-#end
+#set ($width = $xcontext.macro.params.width)
+#set ($height = $xcontext.macro.params.height)
 
 {{/velocity}}
 {{velocity}}
@@ -243,9 +232,9 @@ Compute the width and height.
 
 {{html wiki="false"}}
 #if ($xcontext.macro.params.url.indexOf('google') != -1)
-    &lt;object width="${width}" height="${height}" type="application/x-shockwave-flash" data="${url}"&gt;&lt;param name="movie" value="${url}"&gt;&lt;/param&gt;&lt;param name="allowFullScreen" value="true"&gt;&lt;/param&gt;&lt;/object&gt;
+    &lt;object width="$!{width}" height="$!{height}" type="application/x-shockwave-flash" data="${url}"&gt;&lt;param name="movie" value="${url}"&gt;&lt;/param&gt;&lt;param name="allowFullScreen" value="true"&gt;&lt;/param&gt;&lt;/object&gt;
 #else
-    &lt;iframe src="${url}" width="${width}" height="${height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;iframe src="${url}" width="$!{width}" height="$!{height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
 #end
 {{/html}}
 
@@ -401,10 +390,10 @@ Compute the width and height.
       </name>
     </class>
     <property>
-      <defaultValue/>
+      <defaultValue>100%</defaultValue>
     </property>
     <property>
-      <description>The width of the embedded video, in pixels. By default a size of 600 pixels is used.</description>
+      <description>The width of the embedded video, in pixels.</description>
     </property>
     <property>
       <mandatory>0</mandatory>
@@ -467,7 +456,7 @@ Compute the width and height.
       </name>
     </class>
     <property>
-      <defaultValue/>
+      <defaultValue>400px</defaultValue>
     </property>
     <property>
       <description>The height of the embedded video, in pixels. By default a height of 400 pixels is used.</description>
