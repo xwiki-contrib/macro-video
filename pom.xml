@@ -94,6 +94,11 @@
       <version>${platform.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>video-js</artifactId>
+      <version>4.11.4</version>
+	</dependency>
   </dependencies>
   <build>
     <!-- Needed to add support for the XAR packaging -->

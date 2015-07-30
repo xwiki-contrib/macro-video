@@ -72,6 +72,236 @@ Vimeo:
   <object>
     <name>Macros.Video20</name>
     <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>a0822a56-03ea-4a55-a3e8-14b19a256cd4</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>// Configure require.js to use Video.js (https://github.com/videojs/video.js/blob/stable/docs/guides/setup.md)
+require.config({
+   "paths": { "video-js": "$services.webjars.url('video-js/4.11.4/video.js')" }
+});
+
+// Load the video-js css file
+function loadCss(url) {
+    var link = document.createElement("link");
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = url;
+    document.getElementsByTagName("head")[0].appendChild(link);
+}
+
+require(['video-js'], function(videojs){
+   loadCss("$services.webjars.url('video-js/4.11.4/video-js.min.css')");
+   videojs.options.flash.swf = "$services.webjars.url('video-js/4.11.4/video-js.swf')";
+});</code>
+    </property>
+    <property>
+      <name>Js code for Video.js</name>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>8f368311-a644-44cc-9a5f-10ba6fb78ed6</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#set($videojsURL = $services.webjars.url('video-js/4.11.4/'))
+@font-face{
+  font-family: 'VideoJS';
+  src: url('${videojsURL}font/vjs.eot');
+  src: url('${videojsURL}font/vjs.eot?#iefix') format('embedded-opentype'),
+  url('${videojsURL}font/vjs.woff') format('woff'),
+  url('${videojsURL}font/vjs.ttf') format('truetype'),
+  url('${videojsURL}font/vjs.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
+    </property>
+    <property>
+      <name>Videojs control icons</name>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>0</number>
     <className>XWiki.WikiMacroClass</className>
     <guid>801dd898-1b3f-4b5e-a961-269ed55e69d2</guid>
     <class>
@@ -239,9 +469,62 @@ Compute the width and height.
 {{/html}}
 
 #else
-
-{{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
-
+   #if ($xcontext.macro.params.attachment)
+      ## read a video attachement
+      #if ($xcontext.macro.params.attachmentName != "")
+         #set($videoAttachmentName = $xcontext.macro.params.attachmentName)
+         #if ($doc.getAttachment($videoAttachmentName))
+            #set($discard = $xwiki.jsx.use("Macros.Video20"))
+            #set($discard = $xwiki.ssx.use("Macros.Video20"))
+            #set($videoURL = $doc.getAttachmentURL($videoAttachmentName))
+            #set($videoPoster = $doc.getAttachmentURL($xcontext.macro.params.videoPoster))
+            #set($supportedVideoFormats = ["mp4", "webm", "ogv", "mov", "avi", "mkv", "flv"])
+            #set($videoFormat = "")
+            #set($videoMimeType = "")
+            #set($formatIndex = $videoAttachmentName.lastIndexOf("."))
+            #if ($formatIndex != -1)
+               #set($videoFormat = $videoAttachmentName.substring($mathtool.add($formatIndex, 1), $videoAttachmentName.length()))
+               #if (!$supportedVideoFormats.contains($videoFormat))
+                  #set($videoFormat = "")
+               #else
+                  #set($videoMimeType = $videoFormat)
+                  #if ($videoFormat == "ogv")
+                     #set($videoFormat = "ogg")
+                     #set($videoMimeType = "ogg")
+                  #elseif ($videoFormat == "mov")
+                     #set($videoMimeType = "quicktime")
+                  #elseif ($videoFormat == "avi")
+                     #set($videoMimeType = "x-msvideo") 
+                  #elseif ($videoFormat == "mkv")
+                     #set($videoMimeType = "x-matroska")
+                  #elseif ($videoFormat == "flv")
+                     #set($videoMimeType = "x-flv")  
+                  #end
+               #end   
+            #end
+            #if ($videoFormat != "")
+            {{html}}
+               &lt;video class="video-js vjs-default-skin vjs-big-play-centered" 
+               controls preload="auto" 
+               width="${width}" 
+               height="${height}"
+               poster="$!videoPoster"
+               data-setup=''&gt;
+               &lt;source src="$videoURL" type="video/${videoMimeType}" /&gt;
+               &lt;/video&gt;
+            {{/html}}
+            #else
+               {{warning}}Video format not supported.{{/warning}}   
+            #end
+         #else
+            {{warning}}Video attachment not found!{{/warning}}   
+         #end
+      #else
+         {{warning}}The attachment name you entered ($!{xcontext.macro.params.url})is empty.{{/warning}}
+      #end
+   #else
+     {{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
+   #end
 #end
 {{/velocity}}</code>
     </property>
@@ -255,7 +538,9 @@ Compute the width and height.
       <defaultCategory>Content</defaultCategory>
     </property>
     <property>
-      <description>Display in your wiki page any video from Youtube, Dailymotion, Google Video or Vimeo.</description>
+      <description>Display in your wiki page any video from Youtube, Dailymotion, Google Video or Vimeo.
+
+Also play a video attached to your wiki page using Video.js library. mp4, webm and ogv formats are supported. </description>
     </property>
     <property>
       <id>video</id>
@@ -466,6 +751,205 @@ Compute the width and height.
     </property>
     <property>
       <name>height</name>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>3</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>2b44a1a3-bff4-430c-b67d-74aefa4a5f10</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue>false</defaultValue>
+    </property>
+    <property>
+      <description>This parameter is a boolean that indicates if the video is an URL or an attachment. The default value is false.</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>attachment</name>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>4</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>90a4f3e9-3303-44d2-93a4-3a4894981757</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>The name of the video attachment</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>attachmentName</name>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>5</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>fc601300-1312-4be9-a493-54c9b342e9a4</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue>400px</defaultValue>
+    </property>
+    <property>
+      <description>The poster of the video is an image attachment that will be displayed before starting playing the video.
+</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>videoPoster</name>
     </property>
   </object>
 </xwikidoc>
