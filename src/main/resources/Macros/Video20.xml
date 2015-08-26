@@ -458,7 +458,7 @@ Compute the width and height.
 
 {{/velocity}}
 {{velocity}}
-#if ($url != '')
+#if ("$!url" != '')
 
 {{html wiki="false"}}
 #if ($xcontext.macro.params.url.indexOf('google') != -1)
@@ -469,10 +469,9 @@ Compute the width and height.
 {{/html}}
 
 #else
-   #if ($xcontext.macro.params.attachment)
+   #if ("$!xcontext.macro.params.attachment" != '')
       ## read a video attachement
-      #if ($xcontext.macro.params.attachmentName != "")
-         #set($videoAttachmentName = $xcontext.macro.params.attachmentName)
+         #set($videoAttachmentName = $xcontext.macro.params.attachment)
          #if ($doc.getAttachment($videoAttachmentName))
             #set($discard = $xwiki.jsx.use("Macros.Video20"))
             #set($discard = $xwiki.ssx.use("Macros.Video20"))
@@ -519,9 +518,6 @@ Compute the width and height.
          #else
             {{warning}}Video attachment not found!{{/warning}}   
          #end
-      #else
-         {{warning}}The attachment name you entered ($!{xcontext.macro.params.url})is empty.{{/warning}}
-      #end
    #else
      {{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
    #end
@@ -615,7 +611,7 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
       <description>The URL of the video you want to display on your page (Vimeo, Youtube, Daily Motion or Google Video only).</description>
     </property>
     <property>
-      <mandatory>1</mandatory>
+      <mandatory>0</mandatory>
     </property>
     <property>
       <name>url</name>
@@ -807,10 +803,10 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
       </name>
     </class>
     <property>
-      <defaultValue>false</defaultValue>
+      <defaultValue/>
     </property>
     <property>
-      <description>This parameter is a boolean that indicates if the video is an URL or an attachment. The default value is false.</description>
+      <description>The name of the video attachment.</description>
     </property>
     <property>
       <mandatory/>
@@ -820,10 +816,6 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
     </property>
   </object>
   <object>
-    <name>Macros.Video20</name>
-    <number>4</number>
-    <className>XWiki.WikiMacroParameterClass</className>
-    <guid>90a4f3e9-3303-44d2-93a4-3a4894981757</guid>
     <class>
       <name>XWiki.WikiMacroParameterClass</name>
       <customClass/>
@@ -872,72 +864,10 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
     </class>
-    <property>
-      <defaultValue/>
-    </property>
-    <property>
-      <description>The name of the video attachment</description>
-    </property>
-    <property>
-      <mandatory/>
-    </property>
-    <property>
-      <name>attachmentName</name>
-    </property>
-  </object>
-  <object>
     <name>Macros.Video20</name>
     <number>5</number>
     <className>XWiki.WikiMacroParameterClass</className>
     <guid>fc601300-1312-4be9-a493-54c9b342e9a4</guid>
-    <class>
-      <name>XWiki.WikiMacroParameterClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <defaultValue>
-        <disabled>0</disabled>
-        <name>defaultValue</name>
-        <number>4</number>
-        <prettyName>Parameter default value</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </defaultValue>
-      <description>
-        <disabled>0</disabled>
-        <name>description</name>
-        <number>2</number>
-        <prettyName>Parameter description</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </description>
-      <mandatory>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>mandatory</name>
-        <number>3</number>
-        <prettyName>Parameter mandatory</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </mandatory>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Parameter name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-    </class>
     <property>
       <defaultValue>400px</defaultValue>
     </property>
