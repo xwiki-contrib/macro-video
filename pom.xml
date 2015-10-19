@@ -33,7 +33,7 @@
   <artifactId>macro-video</artifactId>
   <packaging>xar</packaging>
   <name>Video Macro</name>
-  <version>1.8</version>
+  <version>1.9-SNAPSHOT</version>
   <description>Displays videos from YouTube, Dailymotion and Vimeo</description>
   <developers>
     <developer>
@@ -60,7 +60,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/macro-video.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-video.git</developerConnection>
     <url>https://github.com/xwiki-contrib/macro-video</url>
-    <tag>macro-video-1.8</tag>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
