@@ -37,6 +37,10 @@ Vimeo:
 Attachment:
 
 {{video attachment="test-vid.webm"/}}
+
+DASH:
+
+{{video dash="Space.Page"/}}
 {{/code}}
 
 Gives:
@@ -146,9 +150,14 @@ Attachment:
       <cache>long</cache>
     </property>
     <property>
-      <code>// Configure require.js to use Video.js (https://github.com/videojs/video.js/blob/stable/docs/guides/setup.md)
+      <code>// Configure require.js to use video.js and dash.js (https://github.com/videojs/video.js/blob/stable/docs/guides/setup.md)
+// (https://github.com/Dash-Industry-Forum/dash.js)
 require.config({
-   "paths": { "video-js": "$services.webjars.url('video-js/video.js')" }
+   "paths": { 
+            "video-js": "$services.webjars.url('video-js/4.11.4/video.js')",
+            "dash-webm": "$services.webjars.url('dash.js/1.5-SNAPSHOT/contrib/webmjs/dash.webm.min.js')",
+            "videojs-dashjs": "$services.webjars.url('dash.js/1.5-SNAPSHOT/contrib/videojs/videojs-tech-dashjs.js')"
+            }
 });
 
 // Load the video-js css file
@@ -160,9 +169,36 @@ function loadCss(url) {
     document.getElementsByTagName("head")[0].appendChild(link);
 }
 
-require(['video-js'], function(videojs){
+// Set up DASH player 
+function setupPlayer(videoDashID) {
+   // If the dash is not supported on the browser, play an flv video
+   if (videojs.Dashjs.isSupported()) {
+      // Initalize the video.js player
+      var myPlayer = videojs(videoDashID, {context:new Webm.di.WebmContext()});
+   }
+   else
+   {
+      var flvVideoURL = document.getElementById(videoDashID).getElementsByClassName("flv-video-url")[0].value;
+      var sourceElement = document.getElementById(videoDashID).getElementsByTagName("source")[0];
+      sourceElement.setAttribute("src", flvVideoURL);
+      sourceElement.setAttribute("type", "video/x-flv");
+      videojs(videoDashID);
+   }
+}
+
+require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
    loadCss("$services.webjars.url('video-js/4.11.4/video-js.min.css')");
    videojs.options.flash.swf = "$services.webjars.url('video-js/4.11.4/video-js.swf')";
+   require(["videojs-dashjs"], function(videojsdash){
+      $(function(){
+         // Initialize DASH videos
+         $("video.dashvideo").each(function(index){
+            var videoDashID = "dash-video" + index;
+            $(this).attr("id", videoDashID);
+            setupPlayer(videoDashID);
+         });
+      });
+   });
 });</code>
     </property>
     <property>
@@ -473,7 +509,10 @@ Compute the width and height.
             #set($discard = $xwiki.jsx.use("Macros.Video20"))
             #set($discard = $xwiki.ssx.use("Macros.Video20"))
             #set($videoURL = $doc.getAttachmentURL($videoAttachmentName))
-            #set($videoPoster = $doc.getAttachmentURL($xcontext.macro.params.videoPoster))
+            #set($videoPoster = "")
+            #if("$!xcontext.macro.params.videoPoster" != '' &amp;&amp; $doc.getAttachment($xcontext.macro.params.videoPoster))
+               #set($videoPoster = $doc.getAttachmentURL($xcontext.macro.params.videoPoster))
+            #end
             #set($supportedVideoFormats = ["mp4", "webm", "ogv", "mov", "avi", "mkv", "flv"])
             #set($videoFormat = "")
             #set($videoMimeType = "")
@@ -515,6 +554,32 @@ Compute the width and height.
          #else
             {{warning}}Video attachment not found!{{/warning}}
          #end
+   #elseif("$!xcontext.macro.params.dash" != '')
+      #set($dashDocRef = $xcontext.macro.params.dash)
+      #if($xwiki.exists($dashDocRef))
+         #set($dashDoc = $xwiki.getDocument($dashDocRef))
+         #set($manifestFile = $dashDoc.getAttachment("manifest.mpd"))
+         #if($manifestFile)
+            #set($manifestFileURL = $dashDoc.getAttachmentURL("manifest.mpd"))
+            ## If the browser do not support DASH (Media Source Extensions) then display an flv low quality video
+            #set($flvVideoURL = "")
+            #if($dashDoc.getAttachment("video.flv"))
+               #set($flvVideoURL = $dashDoc.getAttachmentURL("video.flv"))
+            #end
+            {{html}}
+            #set($discard = $xwiki.jsx.use("Macros.Video20"))
+            #set($discard = $xwiki.ssx.use("Macros.Video20"))
+            &lt;video class="dashvideo video-js vjs-default-skin" controls preload="auto" width="$!{width}" height="$!{height}" &gt;
+            &lt;source src="$manifestFileURL" type="application/dash+xml"&gt;
+            &lt;input type="hidden" class="flv-video-url" value="$flvVideoURL"/&gt;
+            &lt;/video&gt;
+            {{/html}}
+         #else
+            {{warning}}manifest.mpd attachment not found!{{/warning}} 
+         #end
+      #else
+         {{warning}}The DASH document not found!{{/warning}}
+      #end
    #else
      {{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
    #end
@@ -533,7 +598,9 @@ Compute the width and height.
     <property>
       <description>Display in your wiki page any video from Youtube, Dailymotion, Google Video or Vimeo.
 
-Also play a video attached to your wiki page using Video.js library. mp4, webm and ogv formats are supported. </description>
+Also play a video attached to your wiki page using Video.js library. mp4, webm and ogv formats are supported.
+
+The video macro can also plays a DASH video (Dynamic Adaptive Streaming over HTTP).</description>
     </property>
     <property>
       <id>video</id>
@@ -866,7 +933,7 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
       </name>
     </class>
     <property>
-      <defaultValue>400px</defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>The poster of the video is an image attachment that will be displayed before starting playing the video.
@@ -877,6 +944,72 @@ Also play a video attached to your wiki page using Video.js library. mp4, webm a
     </property>
     <property>
       <name>videoPoster</name>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>6</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>62b9af00-2369-4fbe-82c7-842e01fc7ab4</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue/>
+    </property>
+    <property>
+      <description>The document in which the manifest.mpd file and the video streams are attached.</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>dash</name>
     </property>
   </object>
 </xwikidoc>
