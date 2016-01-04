@@ -155,8 +155,8 @@ Attachment:
 require.config({
    "paths": { 
             "video-js": "$services.webjars.url('video-js/4.11.4/video.js')",
-            "dash-webm": "$services.webjars.url('dash.js/1.5-SNAPSHOT/contrib/webmjs/dash.webm.min.js')",
-            "videojs-dashjs": "$services.webjars.url('dash.js/1.5-SNAPSHOT/contrib/videojs/videojs-tech-dashjs.js')"
+            "dash-webm": "$services.webjars.url('dash.js/1.4/contrib/webmjs/dash.webm.min.js')",
+            "videojs-dashjs": "$services.webjars.url('dash.js/1.4/contrib/videojs/videojs-tech-dashjs.js')"
             }
 });
 
