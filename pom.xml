@@ -34,7 +34,7 @@
   <packaging>xar</packaging>
   <name>Video Macro</name>
   <version>1.11-SNAPSHOT</version>
-  <description>Displays videos from YouTube, Dailymotion and Vimeo</description>
+  <description>Displays videos from YouTube, Dailymotion, Vimeo, attachement videos and DASH videos</description>
   <developers>
     <developer>
       <name>Oana Tabaranu</name>
