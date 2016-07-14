@@ -538,7 +538,7 @@ Compute the width and height.
                #end
             #end
             #if ($videoFormat != "")
-            {{html}}
+            {{html clean='false'}}
                &lt;video class="video-js vjs-default-skin vjs-big-play-centered"
                controls preload="auto"
                width="${width}"
