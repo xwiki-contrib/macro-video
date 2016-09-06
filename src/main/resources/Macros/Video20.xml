@@ -566,7 +566,7 @@ Compute the width and height.
             #if($dashDoc.getAttachment("video.flv"))
                #set($flvVideoURL = $dashDoc.getAttachmentURL("video.flv"))
             #end
-            {{html}}
+            {{html clean='false'}}
             #set($discard = $xwiki.jsx.use("Macros.Video20"))
             #set($discard = $xwiki.ssx.use("Macros.Video20"))
             &lt;video class="dashvideo video-js vjs-default-skin" controls preload="auto" width="$!{width}" height="$!{height}" &gt;
