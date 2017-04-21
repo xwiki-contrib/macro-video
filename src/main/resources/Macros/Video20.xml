@@ -505,13 +505,18 @@ Compute the width and height.
    #if ("$!xcontext.macro.params.attachment" != '')
       ## read a video attachement
          #set($videoAttachmentName = $xcontext.macro.params.attachment)
-         #if ($doc.getAttachment($videoAttachmentName))
+         #set($videoAttachmentDoc = $doc)
+         #set($videoAttachmentRef = $xcontext.macro.params.reference)
+         #if("$!videoAttachmentRef" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $videoAttachmentRef))
+           #set($videoAttachmentDoc = $xwiki.getDocument($services.model.resolveDocument($xcontext.macro.params.reference)))
+         #end
+         #if ($videoAttachmentDoc.getAttachment($videoAttachmentName))
             #set($discard = $xwiki.jsx.use("Macros.Video20"))
             #set($discard = $xwiki.ssx.use("Macros.Video20"))
-            #set($videoURL = $doc.getAttachmentURL($videoAttachmentName))
+            #set($videoURL = $videoAttachmentDoc.getAttachmentURL($videoAttachmentName))
             #set($videoPoster = "")
-            #if("$!xcontext.macro.params.videoPoster" != '' &amp;&amp; $doc.getAttachment($xcontext.macro.params.videoPoster))
-               #set($videoPoster = $doc.getAttachmentURL($xcontext.macro.params.videoPoster))
+            #if("$!xcontext.macro.params.videoPoster" != '' &amp;&amp; $videoAttachmentDoc.getAttachment($xcontext.macro.params.videoPoster))
+               #set($videoPoster = $videoAttachmentDoc.getAttachmentURL($xcontext.macro.params.videoPoster))
             #end
             #set($supportedVideoFormats = ["mp4", "webm", "ogv", "mov", "avi", "mkv", "flv"])
             #set($videoFormat = "")
@@ -1010,6 +1015,72 @@ The video macro can also plays a DASH video (Dynamic Adaptive Streaming over HTT
     </property>
     <property>
       <name>dash</name>
+    </property>
+  </object>
+  <object>
+    <name>Macros.Video20</name>
+    <number>7</number>
+    <className>XWiki.WikiMacroParameterClass</className>
+    <guid>79225132-6d85-48ec-a484-529bf03df89e</guid>
+    <class>
+      <name>XWiki.WikiMacroParameterClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <defaultValue>
+        <disabled>0</disabled>
+        <name>defaultValue</name>
+        <number>4</number>
+        <prettyName>Parameter default value</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </defaultValue>
+      <description>
+        <disabled>0</disabled>
+        <name>description</name>
+        <number>2</number>
+        <prettyName>Parameter description</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <mandatory>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>mandatory</name>
+        <number>3</number>
+        <prettyName>Parameter mandatory</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </mandatory>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Parameter name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <property>
+      <defaultValue></defaultValue>
+    </property>
+    <property>
+      <description>Reference of a document in case of a video attachment.</description>
+    </property>
+    <property>
+      <mandatory/>
+    </property>
+    <property>
+      <name>reference</name>
     </property>
   </object>
 </xwikidoc>
