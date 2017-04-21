@@ -25,15 +25,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.commons</groupId>
-    <artifactId>xwiki-commons-pom</artifactId>
-    <version>4.3</version>
+    <groupId>org.xwiki.contrib</groupId>
+    <artifactId>parent-platform</artifactId>
+    <version>7.4-12</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>macro-video</artifactId>
   <packaging>xar</packaging>
   <name>Video Macro</name>
-  <version>1.13-SNAPSHOT</version>
+  <version>1.12-SNAPSHOT</version>
   <description>Displays videos from YouTube, Dailymotion, Vimeo, attachement videos and DASH videos</description>
   <developers>
     <developer>
@@ -73,7 +73,8 @@
     </repository>
   </distributionManagement>
   <properties>
-    <platform.version>${commons.version}</platform.version>
+    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
+    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/XVIDEO</xwiki.issueManagement.url>
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
     <xwiki.extension.features>elenaoanatabaranu:video-macro</xwiki.extension.features>
