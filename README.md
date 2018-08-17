@@ -7,7 +7,7 @@ Displays videos from YouTube, Dailymotion, Vimeo, attachement videos and DASH vi
 * [Issue Tracker](http://jira.xwiki.org/browse/XVIDEO)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org/xwiki/bin/view/Main/WebHome)
-* Minimal XWiki version supported: 4.3
+* Minimal XWiki version supported: 7.4
 * License: LGPL 2.1
 * Translations: N/A
 * Sonar Dashboard: N/A
