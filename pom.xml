@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>7.4-12</version>
+    <version>7.4-15</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>macro-video</artifactId>
@@ -35,6 +35,15 @@
   <name>Video Macro</name>
   <version>1.13-SNAPSHOT</version>
   <description>Displays videos from YouTube, Dailymotion, Vimeo, attachement videos and DASH videos</description>
+  <properties>
+    <!-- Don't run CLIRR here since there's no Java code. -->
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <xwiki.extension.features>elenaoanatabaranu:video-macro</xwiki.extension.features>
+  	<!-- Enable automatic Jira release. -->
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <!-- If the project is hosted on http://jira.xwiki.org, only the id needs to be provided. -->
+    <xwiki.issueManagement.jira.id>XVIDEO</xwiki.issueManagement.jira.id>
+  </properties>
   <developers>
     <developer>
       <name>Oana Tabaranu</name>
@@ -55,30 +64,12 @@
       <name>Mohamed Boussaa</name>
     </developer>
   </developers>
-  <issueManagement>
-    <system>jira</system>
-    <url>http://jira.xwiki.org/browse/XVIDEO</url>
-  </issueManagement>
   <scm>
     <connection>scm:git:git://github.com/xwiki-contrib/macro-video.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/macro-video.git</developerConnection>
     <url>https://github.com/xwiki-contrib/macro-video</url>
     <tag>HEAD</tag>
   </scm>
-  <distributionManagement>
-    <repository>
-      <id>xwiki-staging</id>
-      <name>XWiki Staging Repository</name>
-      <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-  <properties>
-    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
-    <xwiki.issueManagement.url>https://jira.xwiki.org/browse/XVIDEO</xwiki.issueManagement.url>
-    <!-- Don't run CLIRR here since there's no Java code. -->
-    <xwiki.clirr.skip>true</xwiki.clirr.skip>
-    <xwiki.extension.features>elenaoanatabaranu:video-macro</xwiki.extension.features>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -109,22 +100,4 @@
       <version>1.4</version>
     </dependency>
   </dependencies>
-  <build>
-    <!-- Needed to add support for the XAR packaging -->
-    <extensions>
-      <extension>
-        <groupId>org.xwiki.commons</groupId>
-        <artifactId>xwiki-commons-tool-xar-handlers</artifactId>
-        <version>${commons.version}</version>
-      </extension>
-    </extensions>
-    <plugins>
-      <!-- The XAR packaging uses the XAR plugin and thus we need to define what version to use -->
-      <plugin>
-        <groupId>org.xwiki.commons</groupId>
-        <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-        <version>${commons.version}</version>
-      </plugin>
-    </plugins>
-  </build>
 </project>

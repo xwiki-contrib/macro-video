@@ -1091,7 +1091,7 @@ The video macro can also plays a DASH video (Dynamic Adaptive Streaming over HTT
       </name>
     </class>
     <property>
-      <defaultValue></defaultValue>
+      <defaultValue/>
     </property>
     <property>
       <description>Reference of a document in case of a video attachment.</description>
