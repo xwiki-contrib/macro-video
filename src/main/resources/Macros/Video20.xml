@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="Macros.Video20" locale="">
+<xwikidoc version="1.3" reference="Macros.Video20" locale="">
   <web>Macros</web>
   <name>Video20</name>
   <language/>
@@ -121,7 +121,9 @@ Attachment:
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -262,7 +264,9 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -368,6 +372,7 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
       <validationScript/>
       <code>
         <disabled>0</disabled>
+        <editor>Text</editor>
         <name>code</name>
         <number>9</number>
         <prettyName>Macro code</prettyName>
@@ -377,7 +382,9 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </code>
       <contentDescription>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>contentDescription</name>
         <number>8</number>
         <prettyName>Content description (Not applicable for "No content" type)</prettyName>
@@ -412,7 +419,9 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </defaultCategory>
       <description>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <prettyName>Macro description</prettyName>
@@ -467,8 +476,7 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs){
       </visibility>
     </class>
     <property>
-      <code>{{velocity output=false}}
-
+      <code>{{velocity output="false"}}
 Compute the URL of the embedded video from the original web URL.
 
 #set ($url = '')
@@ -508,106 +516,94 @@ Compute the width and height.
 
 #set ($width = $xcontext.macro.params.width)
 #set ($height = $xcontext.macro.params.height)
-
 {{/velocity}}
 {{velocity}}
 #if ("$!url" != '')
-
-{{html wiki="false"}}
-#if ($xcontext.macro.params.url.indexOf('google') != -1)
-    &lt;object width="$!{width}" height="$!{height}" type="application/x-shockwave-flash" data="${url}"&gt;&lt;param name="movie" value="${url}"&gt;&lt;/param&gt;&lt;param name="allowFullScreen" value="true"&gt;&lt;/param&gt;&lt;/object&gt;
+  {{html clean="false"}}
+  #if ($xcontext.macro.params.url.indexOf('google') != -1)
+    &lt;object width="$!width" height="$!height" type="application/x-shockwave-flash" data="$!url"&gt;
+      &lt;param name="movie" value="$!url"&gt;&lt;/param&gt;
+      &lt;param name="allowFullScreen" value="true"&gt;&lt;/param&gt;
+    &lt;/object&gt;
+  #else
+    &lt;iframe src="$!url" width="$!width" height="$!height" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+  #end
+  {{/html}}
 #else
-    &lt;iframe src="${url}" width="$!{width}" height="$!{height}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
-#end
-{{/html}}
-
-#else
-   #if ("$!xcontext.macro.params.attachment" != '')
-      ## read a video attachement
-         #set($videoAttachmentName = $xcontext.macro.params.attachment)
-         #set($videoAttachmentDoc = $doc)
-         #set($videoAttachmentRef = $xcontext.macro.params.reference)
-         #if("$!videoAttachmentRef" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $videoAttachmentRef))
-           #set($videoAttachmentDoc = $xwiki.getDocument($services.model.resolveDocument($xcontext.macro.params.reference)))
-         #end
-         #if ($videoAttachmentDoc.getAttachment($videoAttachmentName))
-            #set($discard = $xwiki.jsx.use("Macros.Video20"))
-            #set($discard = $xwiki.ssx.use("Macros.Video20"))
-            #set($videoURL = $videoAttachmentDoc.getAttachmentURL($videoAttachmentName))
-            #set($videoPoster = "")
-            #if("$!xcontext.macro.params.videoPoster" != '' &amp;&amp; $videoAttachmentDoc.getAttachment($xcontext.macro.params.videoPoster))
-               #set($videoPoster = $videoAttachmentDoc.getAttachmentURL($xcontext.macro.params.videoPoster))
-            #end
-            #set($supportedVideoFormats = ["mp4", "webm", "ogv", "mov", "avi", "mkv", "flv"])
-            #set($videoFormat = "")
-            #set($videoMimeType = "")
-            #set($formatIndex = $videoAttachmentName.lastIndexOf("."))
-            #if ($formatIndex != -1)
-               #set($videoFormat = $videoAttachmentName.substring($mathtool.add($formatIndex, 1), $videoAttachmentName.length()))
-               #if (!$supportedVideoFormats.contains($videoFormat))
-                  #set($videoFormat = "")
-               #else
-                  #set($videoMimeType = $videoFormat)
-                  #if ($videoFormat == "ogv")
-                     #set($videoFormat = "ogg")
-                     #set($videoMimeType = "ogg")
-                  #elseif ($videoFormat == "mov")
-                     #set($videoMimeType = "quicktime")
-                  #elseif ($videoFormat == "avi")
-                     #set($videoMimeType = "x-msvideo")
-                  #elseif ($videoFormat == "mkv")
-                     #set($videoMimeType = "x-matroska")
-                  #elseif ($videoFormat == "flv")
-                     #set($videoMimeType = "x-flv")
-                  #end
-               #end
-            #end
-            #if ($videoFormat != "")
-            {{html clean='false'}}
-               &lt;video class="video-js vjs-default-skin vjs-big-play-centered"
-               controls preload="auto"
-               width="${width}"
-               height="${height}"
-               poster="$!videoPoster"
-               data-setup=''&gt;
-               &lt;source src="$videoURL" type="video/${videoMimeType}" /&gt;
-               &lt;/video&gt;
-            {{/html}}
-            #else
-               {{warning}}Video format not supported.{{/warning}}
-            #end
-         #else
-            {{warning}}Video attachment not found!{{/warning}}
-         #end
-   #elseif("$!xcontext.macro.params.dash" != '')
-      #set($dashDocRef = $xcontext.macro.params.dash)
-      #if($xwiki.exists($dashDocRef))
-         #set($dashDoc = $xwiki.getDocument($dashDocRef))
-         #set($manifestFile = $dashDoc.getAttachment("manifest.mpd"))
-         #if($manifestFile)
-            #set($manifestFileURL = $dashDoc.getAttachmentURL("manifest.mpd"))
-            ## If the browser do not support DASH (Media Source Extensions) then display an flv low quality video
-            #set($flvVideoURL = "")
-            #if($dashDoc.getAttachment("video.flv"))
-               #set($flvVideoURL = $dashDoc.getAttachmentURL("video.flv"))
-            #end
-            {{html clean='false'}}
-            #set($discard = $xwiki.jsx.use("Macros.Video20"))
-            #set($discard = $xwiki.ssx.use("Macros.Video20"))
-            &lt;video class="dashvideo video-js vjs-default-skin" controls preload="auto" width="$!{width}" height="$!{height}" &gt;
-            &lt;source src="$manifestFileURL" type="application/dash+xml"&gt;
-            &lt;input type="hidden" class="flv-video-url" value="$flvVideoURL"/&gt;
-            &lt;/video&gt;
-            {{/html}}
-         #else
-            {{warning}}manifest.mpd attachment not found!{{/warning}} 
-         #end
-      #else
-         {{warning}}The DASH document not found!{{/warning}}
+  #set ($discard = $xwiki.jsx.use('Macros.Video20'))
+  #set ($discard = $xwiki.ssx.use('Macros.Video20'))
+  #if ("$!xcontext.macro.params.attachment" != '')
+    ## read a video attachement
+    #set ($videoAttachmentName = $xcontext.macro.params.attachment)
+    #set ($videoAttachmentDoc = $doc)
+    #set ($videoAttachmentRef = $xcontext.macro.params.reference)
+    #if ("$!videoAttachmentRef" != '' &amp;&amp; $services.security.authorization.hasAccess('view', $videoAttachmentRef))
+      #set ($videoAttachmentDoc = $xwiki.getDocument($services.model.resolveDocument($videoAttachmentRef)))
+    #end
+    #if ($videoAttachmentDoc.getAttachment($videoAttachmentName))
+      #set ($videoURL = $videoAttachmentDoc.getAttachmentURL($videoAttachmentName))
+      #set ($videoPoster = '')
+      #if ($videoAttachmentDoc.getAttachment($xcontext.macro.params.videoPoster))
+        #set ($videoPoster = $videoAttachmentDoc.getAttachmentURL($xcontext.macro.params.videoPoster))
       #end
-   #else
-     {{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
-   #end
+      #set ($supportedVideoFormats = ['mp4', 'webm', 'ogv', 'mov', 'avi', 'mkv', 'flv'])
+      #set ($formatIndex = $videoAttachmentName.lastIndexOf('.'))
+      #if ($formatIndex != -1)
+        #set ($videoFormat = $videoAttachmentName.substring($mathtool.add($formatIndex, 1), $videoAttachmentName.length()))
+        #if ($supportedVideoFormats.contains($videoFormat))
+          #set ($videoMimeType = $videoFormat)
+          #if ($videoFormat == 'ogv')
+            #set ($videoMimeType = 'ogg')
+          #elseif ($videoFormat == 'mov')
+            #set ($videoMimeType = 'quicktime')
+          #elseif ($videoFormat == 'avi')
+            #set ($videoMimeType = 'x-msvideo')
+          #elseif ($videoFormat == 'mkv')
+            #set ($videoMimeType = 'x-matroska')
+          #elseif ($videoFormat == 'flv')
+            #set ($videoMimeType = 'x-flv')
+          #end
+        #end
+      #end
+      #if ("$!videoFormat" != '')
+        {{html clean="false"}}
+        &lt;video class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+            width="$!width" height="$!height" poster="$!videoPoster" data-setup=''&gt;
+          &lt;source src="$!videoURL" type="video/$!videoMimeType" /&gt;
+        &lt;/video&gt;
+        {{/html}}
+      #else
+        {{warning}}Video format not supported.{{/warning}}
+      #end
+    #else
+      {{warning}}Video attachment not found.{{/warning}}
+    #end
+  #elseif("$!xcontext.macro.params.dash" != '')
+    #set ($dashDocRef = $services.model.resolveDocument($xcontext.macro.params.dash))
+    #if ($xwiki.exists($dashDocRef))
+      #set ($dashDoc = $xwiki.getDocument($dashDocRef))
+      #if ($dashDoc.getAttachment('manifest.mpd'))
+        #set ($manifestFileURL = $dashDoc.getAttachmentURL('manifest.mpd'))
+        ## If the browser do not support DASH (Media Source Extensions) then display an flv low quality video
+        #set ($flvVideoURL = '')
+        #if ($dashDoc.getAttachment('video.flv'))
+           #set ($flvVideoURL = $dashDoc.getAttachmentURL('video.flv'))
+        #end
+        {{html clean="false"}}
+        &lt;video class="dashvideo video-js vjs-default-skin" controls preload="auto" width="$!width" height="$!height" &gt;
+          &lt;source src="$!manifestFileURL" type="application/dash+xml"&gt;
+          &lt;input type="hidden" class="flv-video-url" value="$!flvVideoURL"/&gt;
+        &lt;/video&gt;
+        {{/html}}
+      #else
+        {{warning}}manifest.mpd attachment not found.{{/warning}} 
+      #end
+    #else
+      {{warning}}The DASH document not found.{{/warning}}
+    #end
+  #else
+    {{warning}}The Video URL you entered ($!{xcontext.macro.params.url}) does not match any of the video websites supported by this macro. Please check the address you entered or improve the macro to make it support this website.{{/warning}}
+  #end
 #end
 {{/velocity}}</code>
     </property>
@@ -961,8 +957,7 @@ The video macro can also plays a DASH video (Dynamic Adaptive Streaming over HTT
       <defaultValue/>
     </property>
     <property>
-      <description>The poster of the video is an image attachment that will be displayed before starting playing the video.
-</description>
+      <description>The poster of the video is an image attachment that will be displayed before starting playing the video.</description>
     </property>
     <property>
       <mandatory/>
