@@ -543,7 +543,7 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs) {
   ## which should be transformed into:
   ## https://youtube.googleapis.com/v/&lt;videoId&gt;
   #set ($url = $xcontext.macro.params.url.replaceAll('^.*?[&amp;?]v=(.*?)(&amp;.*|$)', '//www.youtube.com/embed/$1'))
-  ## if video contains a timestamp in format t=20, replace it with start=20, because embeded player uses 'start' parameter instead of 't'
+  ## if video contains a timestamp in format t=20, replace it with start=20, because the embedded player uses 'start' parameter instead of 't'
   #set ($url = $url.replaceAll('(?&lt;=[\?&amp;])t=(\d+)', 'start=$1'))
 #elseif ($xcontext.macro.params.url.indexOf('youtu.be') != -1)
   ## YouTube URLs have the following format:
@@ -551,7 +551,7 @@ require(['jquery', 'dash-webm', 'video-js'], function($, dashwebm, videojs) {
   ## which should be transformed into:
   ## https://youtube.googleapis.com/v/&lt;videoId&gt;
   #set ($url = $xcontext.macro.params.url.replaceAll('^.*youtu.be/(.*?)(&amp;.*|$)', '//www.youtube.com/embed/$1'))
-  ## if video contains a timestamp in format t=20, replace it with start=20, because embeded player uses 'start' parameter instead of 't'
+  ## if video contains a timestamp in format t=20, replace it with start=20, because the embedded player uses 'start' parameter instead of 't'
   #set ($url = $url.replaceAll('(?&lt;=[\?&amp;])t=(\d+)', 'start=$1'))
 #elseif ($xcontext.macro.params.url.indexOf('google') != -1)
   ## Google Video URLs have the following format:
