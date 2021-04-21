@@ -43,6 +43,11 @@
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <!-- If the project is hosted on http://jira.xwiki.org, only the id needs to be provided. -->
     <xwiki.issueManagement.jira.id>XVIDEO</xwiki.issueManagement.jira.id>
+
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.rendering.macro.Macro/video
+    </xwiki.extension.components>
   </properties>
   <developers>
     <developer>
